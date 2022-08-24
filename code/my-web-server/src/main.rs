@@ -5,17 +5,21 @@ use std::{
     thread,
     time::Duration,
 };
+use my_web_server::ThreadPool;
 
 fn main() {
     // create listener
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    // create thread pool
+    let pool = ThreadPool::new(4);
+
     // listen incoming requests
     for stream in listener.incoming() {
         // receive message as stream
         let stream = stream.unwrap();
         
         // handle stream
-        thread::spawn(|| {
+        pool.execute(|| {
             handle_connection(stream);
         });
     }
