@@ -15,7 +15,9 @@ fn main() {
         let stream = stream.unwrap();
         
         // handle stream
-        handle_connection(stream);
+        thread::spawn(|| {
+            handle_connection(stream);
+        });
     }
 }
 
