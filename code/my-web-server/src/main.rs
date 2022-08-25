@@ -14,7 +14,7 @@ fn main() {
     let pool = ThreadPool::new(4);
 
     // listen incoming requests
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(2) {
         // receive message as stream
         let stream = stream.unwrap();
         
